@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>6.2</version>
+    <date>2023-03-04T08:06:43Z</date>
+    <template_groups>
+        <template_group>
+            <uuid>7df96b18c230490a9a0a9e2307226338</uuid>
+            <name>Templates</name>
+        </template_group>
+    </template_groups>
+    <templates>
+        <template>
+            <uuid>392e59dad0074ee7927023ef3e79ea4b</uuid>
+            <template>Keenetic</template>
+            <name>Keenetic</name>
+            <description>Шаблон для Keenetic 
+
+Использовавшие MIBs:
+
+SNMPv2-MIB.mib
+UCD-SNMP-MIB.mib
+
+https://help.keenetic.com/hc/article_attachments/115010604945/MIBs.zip
+
+
+https://github.com/snagovskiy/Template-Zabbix-for-Keenetic</description>
+            <templates>
+                <template>
+                    <name>ICMP Ping</name>
+                </template>
+            </templates>
+            <groups>
+                <group>
+                    <name>Templates</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <uuid>9df0ef833baa4b6f9c17288bda0d59af</uuid>
+                    <name>sysContact</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>1.3.6.1.2.1.1.4.0</snmp_oid>
+                    <key>sysContact</key>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <description>Контакты</description>
+                </item>
+                <item>
+                    <uuid>224c697d4a354f28b555136ca63b2f02</uuid>
+                    <name>sysDescr</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>1.3.6.1.2.1.1.1.0</snmp_oid>
+                    <key>sysDescr</key>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <description>Информация о системе</description>
+                </item>
+                <item>
+                    <uuid>9b57b78b57a5429f8692aae36c23410e</uuid>
+                    <name>sysLocation</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>1.3.6.1.2.1.1.6.0</snmp_oid>
+                    <key>sysLocation</key>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <description>Расположение</description>
+                </item>
+                <item>
+                    <uuid>126d1bc810784ffd931e184d2221caaf</uuid>
+                    <name>sysServices</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>1.3.6.1.2.1.1.7.0</snmp_oid>
+                    <key>sysServices</key>
+                    <history>2w</history>
+                    <trends>0</trends>
+                    <description>Системные сервисы</description>
+                </item>
+                <item>
+                    <uuid>d1f81d6f2267448bb974515ac3cf6e65</uuid>
+                    <name>sysUpTime</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>1.3.6.1.2.1.1.3.0</snmp_oid>
+                    <key>sysUpTime</key>
+                    <delay>30</delay>
+                    <trends>90d</trends>
+                    <description>Время работы системы</description>
+                </item>
+            </items>
+            <tags>
+                <tag>
+                    <tag>target</tag>
+                    <value>keenetic</value>
+                </tag>
+            </tags>
+        </template>
+    </templates>
+    <graphs>
+        <graph>
+            <uuid>52aa1dcfb2064542b343032b0457a497</uuid>
+            <name>sysUpTime</name>
+            <graph_items>
+                <graph_item>
+                    <color>1A7C11</color>
+                    <calc_fnc>ALL</calc_fnc>
+                    <item>
+                        <host>Keenetic</host>
+                        <key>sysUpTime</key>
+                    </item>
+                </graph_item>
+            </graph_items>
+        </graph>
+    </graphs>
+</zabbix_export>
