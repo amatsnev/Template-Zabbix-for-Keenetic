@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>6.2</version>
-    <date>2023-03-04T15:23:48Z</date>
+    <date>2023-03-04T15:44:01Z</date>
     <template_groups>
         <template_group>
             <uuid>7df96b18c230490a9a0a9e2307226338</uuid>
@@ -35,6 +35,18 @@ https://github.com/snagovskiy/Template-Zabbix-for-Keenetic</description>
                 </group>
             </groups>
             <items>
+                <item>
+                    <uuid>707b6be2c3964745a67cf14dae06caf3</uuid>
+                    <name>MAC - адрес</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>.1.3.6.1.2.1.2.2.1.6.9</snmp_oid>
+                    <key>ifPhysAddress</key>
+                    <delay>12h</delay>
+                    <trends>0</trends>
+                    <value_type>TEXT</value_type>
+                    <description>Физический адрес устройства</description>
+                    <inventory_link>MACADDRESS_A</inventory_link>
+                </item>
                 <item>
                     <uuid>9df0ef833baa4b6f9c17288bda0d59af</uuid>
                     <name>Ситемные контакты</name>
