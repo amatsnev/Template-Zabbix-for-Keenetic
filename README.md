@@ -1,2 +1,2 @@
-# Template-Zabbix-for-Keenetic-
+# Template-Zabbix-for-Keenetic
 Шаблон Zabbix для Keenetic
