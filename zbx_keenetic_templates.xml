@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>6.2</version>
-    <date>2023-03-04T11:21:19Z</date>
+    <date>2023-03-04T15:23:48Z</date>
     <template_groups>
         <template_group>
             <uuid>7df96b18c230490a9a0a9e2307226338</uuid>
@@ -36,17 +36,8 @@ https://github.com/snagovskiy/Template-Zabbix-for-Keenetic</description>
             </groups>
             <items>
                 <item>
-                    <uuid>c8e318c9ac6f43f6948d1ba1a7f948f6</uuid>
-                    <name>ifOutUcastPkts</name>
-                    <type>SNMP_AGENT</type>
-                    <snmp_oid>1.3.6.1.2.1.31.1.1.1.11.24</snmp_oid>
-                    <key>ifOutUcastPkts</key>
-                    <delay>30</delay>
-                    <trends>90d</trends>
-                </item>
-                <item>
                     <uuid>9df0ef833baa4b6f9c17288bda0d59af</uuid>
-                    <name>sysContact</name>
+                    <name>Ситемные контакты</name>
                     <type>SNMP_AGENT</type>
                     <snmp_oid>1.3.6.1.2.1.1.4.0</snmp_oid>
                     <key>sysContact</key>
@@ -56,10 +47,11 @@ https://github.com/snagovskiy/Template-Zabbix-for-Keenetic</description>
                 </item>
                 <item>
                     <uuid>224c697d4a354f28b555136ca63b2f02</uuid>
-                    <name>sysDescr</name>
+                    <name>Описание ОС</name>
                     <type>SNMP_AGENT</type>
                     <snmp_oid>1.3.6.1.2.1.1.1.0</snmp_oid>
                     <key>sysDescr</key>
+                    <delay>12h</delay>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <description>Информация о системе</description>
@@ -67,17 +59,18 @@ https://github.com/snagovskiy/Template-Zabbix-for-Keenetic</description>
                 </item>
                 <item>
                     <uuid>9b57b78b57a5429f8692aae36c23410e</uuid>
-                    <name>sysLocation</name>
+                    <name>Геопозиция</name>
                     <type>SNMP_AGENT</type>
                     <snmp_oid>1.3.6.1.2.1.1.6.0</snmp_oid>
                     <key>sysLocation</key>
+                    <delay>12h</delay>
                     <trends>0</trends>
                     <value_type>TEXT</value_type>
                     <description>Расположение</description>
                 </item>
                 <item>
                     <uuid>b673b7d405014d94abbb3f6db41042bb</uuid>
-                    <name>sysName</name>
+                    <name>Имя устройства</name>
                     <type>SNMP_AGENT</type>
                     <snmp_oid>.1.3.6.1.2.1.1.5.0</snmp_oid>
                     <key>sysName</key>
@@ -88,7 +81,7 @@ https://github.com/snagovskiy/Template-Zabbix-for-Keenetic</description>
                 </item>
                 <item>
                     <uuid>126d1bc810784ffd931e184d2221caaf</uuid>
-                    <name>sysServices</name>
+                    <name>Ситемные сервисы</name>
                     <type>SNMP_AGENT</type>
                     <snmp_oid>1.3.6.1.2.1.1.7.0</snmp_oid>
                     <key>sysServices</key>
@@ -98,31 +91,75 @@ https://github.com/snagovskiy/Template-Zabbix-for-Keenetic</description>
                 </item>
                 <item>
                     <uuid>d1f81d6f2267448bb974515ac3cf6e65</uuid>
-                    <name>sysUpTime</name>
+                    <name>Время работы</name>
                     <type>SNMP_AGENT</type>
                     <snmp_oid>1.3.6.1.2.1.1.3.0</snmp_oid>
                     <key>sysUpTime</key>
-                    <delay>30</delay>
                     <trends>90d</trends>
                     <description>Время работы системы</description>
                 </item>
             </items>
             <discovery_rules>
                 <discovery_rule>
+                    <uuid>a89578b03c244ac1932d523fe9e96209</uuid>
+                    <name>Подключеные диски</name>
+                    <type>SNMP_AGENT</type>
+                    <snmp_oid>discovery[{#ITEMVALUE}, .1.3.6.1.4.1.2021.9.1.1, {#DSKPATH}, .1.3.6.1.4.1.2021.9.1.2, {#DSKTOTAL}, .1.3.6.1.4.1.2021.9.1.6, {#DSKAVAIL}, .1.3.6.1.4.1.2021.9.1.7, {#DSKUSED}, .1.3.6.1.4.1.2021.9.1.8]</snmp_oid>
+                    <key>dskIndex</key>
+                    <delay>1h</delay>
+                    <item_prototypes>
+                        <item_prototype>
+                            <uuid>2c7860fab8db4d0eae4303e02ba1eb56</uuid>
+                            <name>Свободное место на диске {#SNMPINDEX} {#DSKPATH}</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>.1.3.6.1.4.1.2021.9.1.7.{#SNMPINDEX}</snmp_oid>
+                            <key>dskAvail.[{#SNMPINDEX}]</key>
+                            <delay>1h</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>RTRIM</type>
+                                    <parameters>
+                                        <parameter>GB</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                        </item_prototype>
+                        <item_prototype>
+                            <uuid>62dc4bf75bb743fba58065b570bb4e0f</uuid>
+                            <name>Использованное место на диске {#SNMPINDEX} {#DSKPATH}</name>
+                            <type>SNMP_AGENT</type>
+                            <snmp_oid>.1.3.6.1.4.1.2021.9.1.8.{#SNMPINDEX}</snmp_oid>
+                            <key>dskUsed.[{#SNMPINDEX}]</key>
+                            <delay>1h</delay>
+                            <trends>0</trends>
+                            <value_type>TEXT</value_type>
+                            <preprocessing>
+                                <step>
+                                    <type>RTRIM</type>
+                                    <parameters>
+                                        <parameter>GB</parameter>
+                                    </parameters>
+                                </step>
+                            </preprocessing>
+                        </item_prototype>
+                    </item_prototypes>
+                </discovery_rule>
+                <discovery_rule>
                     <uuid>f8a7fa9df68d4defadbfabf54428c782</uuid>
-                    <name>laIndex</name>
+                    <name>Средняя нагрузна ядро CPU</name>
                     <type>SNMP_AGENT</type>
                     <snmp_oid>discovery[{#SNMPVALUE}, .1.3.6.1.4.1.2021.10.1.3]</snmp_oid>
                     <key>laIndex</key>
-                    <delay>30s</delay>
                     <item_prototypes>
                         <item_prototype>
                             <uuid>0bbdc3a95a694ab794a0eb87edb93569</uuid>
-                            <name>laLoad.{#SNMPINDEX} - {#SNMPVALUE}</name>
+                            <name>Средняя нагрузка на ядро {#SNMPINDEX} - {#SNMPVALUE}</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.2021.10.1.3.{#SNMPINDEX}</snmp_oid>
                             <key>laLoad.[{#SNMPINDEX}]</key>
-                            <trends>90d</trends>
+                            <value_type>FLOAT</value_type>
                         </item_prototype>
                     </item_prototypes>
                 </discovery_rule>
@@ -136,20 +173,6 @@ https://github.com/snagovskiy/Template-Zabbix-for-Keenetic</description>
         </template>
     </templates>
     <graphs>
-        <graph>
-            <uuid>ea75f942d1d84735ae02dbb539313eaa</uuid>
-            <name>ifOutUcastPkts</name>
-            <graph_items>
-                <graph_item>
-                    <color>1A7C11</color>
-                    <calc_fnc>ALL</calc_fnc>
-                    <item>
-                        <host>Keenetic</host>
-                        <key>ifOutUcastPkts</key>
-                    </item>
-                </graph_item>
-            </graph_items>
-        </graph>
         <graph>
             <uuid>52aa1dcfb2064542b343032b0457a497</uuid>
             <name>sysUpTime</name>
