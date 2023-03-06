@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
     <version>6.2</version>
-    <date>2023-03-06T10:00:54Z</date>
+    <date>2023-03-06T15:48:02Z</date>
     <template_groups>
         <template_group>
             <uuid>7df96b18c230490a9a0a9e2307226338</uuid>
@@ -119,10 +119,20 @@ https://github.com/snagovskiy/Template-Zabbix-for-Keenetic</description>
                     <snmp_oid>discovery[{#ITEMVALUE}, .1.3.6.1.4.1.2021.9.1.1, {#DSKPATH}, .1.3.6.1.4.1.2021.9.1.2, {#DSKTOTAL}, .1.3.6.1.4.1.2021.9.1.6, {#DSKAVAIL}, .1.3.6.1.4.1.2021.9.1.7, {#DSKUSED}, .1.3.6.1.4.1.2021.9.1.8]</snmp_oid>
                     <key>dskIndex</key>
                     <delay>1h</delay>
+                    <filter>
+                        <conditions>
+                            <condition>
+                                <macro>{#SNMPINDEX}</macro>
+                                <value>1|3</value>
+                                <formulaid>A</formulaid>
+                            </condition>
+                        </conditions>
+                    </filter>
+                    <lifetime>0</lifetime>
                     <item_prototypes>
                         <item_prototype>
                             <uuid>2c7860fab8db4d0eae4303e02ba1eb56</uuid>
-                            <name>Свободное место на диске {#SNMPINDEX} {#DSKPATH}</name>
+                            <name>Свободное место на диске  {#DSKPATH}</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.2021.9.1.7.{#SNMPINDEX}</snmp_oid>
                             <key>dskAvail.[{#SNMPINDEX}]</key>
@@ -146,7 +156,7 @@ https://github.com/snagovskiy/Template-Zabbix-for-Keenetic</description>
                         </item_prototype>
                         <item_prototype>
                             <uuid>f842ed7c856a403ea677393e86d9bb86</uuid>
-                            <name>Процент свободго места на диске {#SNMPINDEX}</name>
+                            <name>Процент свободго места на диске {#DSKPATH}</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.4.1.2021.9.1.9.{#SNMPINDEX}</snmp_oid>
                             <key>dskPercent.[{#SNMPINDEX}]</key>
@@ -164,7 +174,7 @@ https://github.com/snagovskiy/Template-Zabbix-for-Keenetic</description>
                         </item_prototype>
                         <item_prototype>
                             <uuid>62dc4bf75bb743fba58065b570bb4e0f</uuid>
-                            <name>Использованное место на диске {#SNMPINDEX} {#DSKPATH}</name>
+                            <name>Использованное место на диске {#DSKPATH}</name>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>.1.3.6.1.4.1.2021.9.1.8.{#SNMPINDEX}</snmp_oid>
                             <key>dskUsed.[{#SNMPINDEX}]</key>
@@ -187,6 +197,38 @@ https://github.com/snagovskiy/Template-Zabbix-for-Keenetic</description>
                             </preprocessing>
                         </item_prototype>
                     </item_prototypes>
+                    <graph_prototypes>
+                        <graph_prototype>
+                            <uuid>01fdd81f129c4c739957c70373877e41</uuid>
+                            <name>Использованное место на диске {#SNMPINDEX}</name>
+                            <width>600</width>
+                            <height>360</height>
+                            <yaxismax>0</yaxismax>
+                            <show_work_period>NO</show_work_period>
+                            <show_triggers>NO</show_triggers>
+                            <type>PIE</type>
+                            <show_3d>YES</show_3d>
+                            <graph_items>
+                                <graph_item>
+                                    <color>1A7C11</color>
+                                    <calc_fnc>MIN</calc_fnc>
+                                    <item>
+                                        <host>Keenetic</host>
+                                        <key>dskAvail.[{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                                <graph_item>
+                                    <sortorder>1</sortorder>
+                                    <color>FF4000</color>
+                                    <calc_fnc>MIN</calc_fnc>
+                                    <item>
+                                        <host>Keenetic</host>
+                                        <key>dskUsed.[{#SNMPINDEX}]</key>
+                                    </item>
+                                </graph_item>
+                            </graph_items>
+                        </graph_prototype>
+                    </graph_prototypes>
                 </discovery_rule>
                 <discovery_rule>
                     <uuid>f8a7fa9df68d4defadbfabf54428c782</uuid>
