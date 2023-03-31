@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <zabbix_export>
-    <version>6.2</version>
-    <date>2023-03-08T06:38:03Z</date>
+    <version>6.4</version>
     <template_groups>
         <template_group>
             <uuid>7df96b18c230490a9a0a9e2307226338</uuid>
@@ -133,7 +132,6 @@ https://github.com/snagovskiy/Template-Zabbix-for-Keenetic</description>
                     <type>SNMP_AGENT</type>
                     <snmp_oid>discovery[{#ITEMVALUE}, .1.3.6.1.4.1.2021.9.1.1, {#DSKPATH}, .1.3.6.1.4.1.2021.9.1.2, {#DSKTOTAL}, .1.3.6.1.4.1.2021.9.1.6, {#DSKAVAIL}, .1.3.6.1.4.1.2021.9.1.7, {#DSKUSED}, .1.3.6.1.4.1.2021.9.1.8]</snmp_oid>
                     <key>dskIndex</key>
-                    <delay>1h</delay>
                     <filter>
                         <conditions>
                             <condition>
@@ -175,7 +173,6 @@ https://github.com/snagovskiy/Template-Zabbix-for-Keenetic</description>
                             <type>SNMP_AGENT</type>
                             <snmp_oid>1.3.6.1.4.1.2021.9.1.9.{#SNMPINDEX}</snmp_oid>
                             <key>dskPercent.[{#SNMPINDEX}]</key>
-                            <delay>1h</delay>
                             <trends>90d</trends>
                             <units>%</units>
                             <preprocessing>
@@ -186,6 +183,14 @@ https://github.com/snagovskiy/Template-Zabbix-for-Keenetic</description>
                                     </parameters>
                                 </step>
                             </preprocessing>
+                            <trigger_prototypes>
+                                <trigger_prototype>
+                                    <uuid>1eaa803ea3c34b938b54c124f5e252be</uuid>
+                                    <expression>min(/Keenetic/dskPercent.[{#SNMPINDEX}],1m)&gt;90</expression>
+                                    <name>Свободное место на диске меньше {#DSKPATH} 90%</name>
+                                    <priority>DISASTER</priority>
+                                </trigger_prototype>
+                            </trigger_prototypes>
                         </item_prototype>
                         <item_prototype>
                             <uuid>f1e75f058ec843bdbbc724599c30471f</uuid>
