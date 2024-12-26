@@ -1,5 +1,6 @@
 # Template-Zabbix-for-Keenetic
-Шаблон Zabbix для Keenetic
+Шаблон Zabbix для Keenetic 
+(За основу взят https://github.com/snagovskiy/Template-Zabbix-for-Keenetic)
 
 Использовавшие MIBs:
 
