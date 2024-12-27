@@ -1,6 +1,6 @@
 zabbix_export:
   version: '6.0'
-  date: '2024-12-26T13:44:34Z'
+  date: '2024-12-27T11:15:17Z'
   groups:
     - uuid: 36bff6c29af64692839d077febfc7079
       name: 'Templates/Network devices'
@@ -21,69 +21,11 @@ zabbix_export:
         ГОСТ Р 58281-2018
         ГОСТ 19597-94
         ГОСТ 13345-85
+      templates:
+        - name: 'ICMP Ping'
       groups:
         - name: 'Templates/Network devices'
       items:
-        - uuid: 95a7ff891a2e4b5f8d3b744714b2604e
-          name: 'ICMP ping'
-          type: SIMPLE
-          key: icmpping
-          valuemap:
-            name: 'Service state'
-          tags:
-            - tag: component
-              value: health
-            - tag: component
-              value: network
-          triggers:
-            - uuid: c5ff4d6204904f67b6cc2cc3528e330a
-              expression: 'max(/Keenetic system by SNMP/icmpping,#3)=0'
-              name: 'Unavailable by ICMP ping'
-              priority: HIGH
-        - uuid: d17ed140741a4ce7a739c0cf51353fa5
-          name: 'ICMP loss'
-          type: SIMPLE
-          key: icmppingloss
-          history: 1w
-          value_type: FLOAT
-          units: '%'
-          tags:
-            - tag: component
-              value: health
-            - tag: component
-              value: network
-          triggers:
-            - uuid: 7d7ca2061c224f27b4123d4af3e4f865
-              expression: 'min(/Keenetic system by SNMP/icmppingloss,5m)>{$ICMP_LOSS_WARN} and min(/Keenetic system by SNMP/icmppingloss,5m)<100'
-              name: 'High ICMP ping loss'
-              opdata: 'Loss: {ITEM.LASTVALUE1}'
-              priority: WARNING
-              dependencies:
-                - name: 'Unavailable by ICMP ping'
-                  expression: 'max(/Keenetic system by SNMP/icmpping,#3)=0'
-        - uuid: c032c8fdbd704c2c9483a4ae1fbf1555
-          name: 'ICMP response time'
-          type: SIMPLE
-          key: icmppingsec
-          history: 1w
-          value_type: FLOAT
-          units: s
-          tags:
-            - tag: component
-              value: health
-            - tag: component
-              value: network
-          triggers:
-            - uuid: 066ca9b9da4747b984290fd16a2ca73a
-              expression: 'avg(/Keenetic system by SNMP/icmppingsec,5m)>{$ICMP_RESPONSE_TIME_WARN}'
-              name: 'High ICMP ping response time'
-              opdata: 'Value: {ITEM.LASTVALUE1}'
-              priority: WARNING
-              dependencies:
-                - name: 'High ICMP ping loss'
-                  expression: 'min(/Keenetic system by SNMP/icmppingloss,5m)>{$ICMP_LOSS_WARN} and min(/Keenetic system by SNMP/icmppingloss,5m)<100'
-                - name: 'Unavailable by ICMP ping'
-                  expression: 'max(/Keenetic system by SNMP/icmpping,#3)=0'
         - uuid: fff4b0bfb5c744f0ad004dbbd4acc2cf
           name: 'Keenetic: System contact'
           type: SNMP_AGENT
